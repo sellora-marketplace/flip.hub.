@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FlipHub — Reselling Dashboard</title>
+<style>
+:root{--bg:#0b1020;--panel:#121a2e;--panel2:#18233b;--text:#eef3ff;--muted:#9aa8c4;--accent:#8b7cff;--green:#40d6a0;--red:#ff7185;--line:#293653}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top right,#20234c 0,#0b1020 42%);color:var(--text);font:15px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}
+.wrap{max-width:1180px;margin:auto;padding:28px 20px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#9b8cff,#5dcbef);display:grid;place-items:center;color:#10142b;font-weight:900;font-size:22px}.brand h1{font-size:21px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}
+.pill{border:1px solid var(--line);background:#121a2e;color:#c8d2e8;padding:8px 12px;border-radius:30px;font-size:12px}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:26px 0}.hero h2{font-size:clamp(26px,4vw,38px);margin:0 0 6px;letter-spacing:-1px}.hero p{margin:0;color:var(--muted)}
+.btn{border:0;border-radius:11px;padding:11px 16px;background:var(--accent);color:white;font-weight:700;cursor:pointer}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:#253251;color:#e7edff}.btn.danger{background:#482536;color:#ffb5c0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}.stat,.panel{background:linear-gradient(160deg,#151f36,#10182b);border:1px solid var(--line);border-radius:17px}.stat{padding:17px}.stat small{color:var(--muted)}.stat strong{display:block;font-size:26px;margin-top:6px}.positive{color:var(--green)}.negative{color:var(--red)}
+.layout{display:grid;grid-template-columns:1.5fr .9fr;gap:16px}.panel{padding:18px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel h3{margin:0;font-size:17px}.search{width:100%;background:#0d1527;border:1px solid var(--line);border-radius:10px;padding:11px 12px;color:var(--text);outline:none}.filters{display:flex;gap:8px;margin:12px 0 16px;flex-wrap:wrap}.filter{background:#1b2843;border:1px solid var(--line);color:#c7d2eb;padding:7px 11px;border-radius:20px;cursor:pointer;font-size:12px}.filter.active{background:#4a438c;border-color:#8378ff;color:white}
+table{width:100%;border-collapse:collapse;text-align:left}th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:600;padding:10px 8px;border-bottom:1px solid var(--line)}td{padding:13px 8px;border-bottom:1px solid #202d47;font-size:13px}tr:last-child td{border-bottom:0}.item{font-weight:700}.sub{display:block;color:var(--muted);font-size:11px}.status{display:inline-block;border-radius:20px;padding:4px 8px;font-size:10px;font-weight:700}.available{background:#1b443d;color:#70e3bd}.sold{background:#27375a;color:#aebfff}.actions{display:flex;gap:6px}.mini{border:1px solid var(--line);background:#1b2944;color:#dbe4fb;border-radius:8px;padding:5px 8px;cursor:pointer;font-size:11px}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:11px;color:var(--muted)}.field input,.field select{width:100%;padding:10px;background:#0d1527;border:1px solid var(--line);border-radius:9px;color:var(--text);outline:none}.field input:focus,.field select:focus,.search:focus{border-color:#8b7cff}.form-actions{display:flex;gap:8px;margin-top:14px}.hint{font-size:11px;color:var(--muted);margin-top:12px}.profitbox{background:#0d1527;border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:12px;display:flex;justify-content:space-between;align-items:center}.profitbox strong{font-size:19px;color:var(--green)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#eaf0ff;color:#12182b;padding:10px 16px;border-radius:12px;box-shadow:0 8px 30px #0006;display:none;font-weight:700;font-size:13px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:540px){.wrap{padding:18px 12px 40px}.hero{align-items:start;flex-direction:column}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:22px}.panel{padding:13px}.tablewrap{overflow-x:auto}table{min-width:590px}.top .pill{display:none}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="logo">F</div><div><h1>FlipHub</h1><p>YOUR RESALE BUSINESS, ORGANIZED</p></div></div>
+    <div class="pill">✦ Personal reselling dashboard</div>
+  </header>
+
+  <section class="hero">
+    <div><h2>Make every flip count.</h2><p>Track your stock, sales, and profit in one place.</p></div>
+    <button class="btn" onclick="document.getElementById('productName').focus()">＋ Add a product</button>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>Products listed</small><strong id="listedCount">0</strong></div>
+    <div class="stat"><small>Items sold</small><strong id="soldCount">0</strong></div>
+    <div class="stat"><small>Total revenue</small><strong id="revenue">€0.00</strong></div>
+    <div class="stat"><small>Net profit</small><strong class="positive" id="profit">€0.00</strong></div>
+  </section>
+
+  <main class="layout">
+    <section class="panel">
+      <div class="panel-head"><h3>Your inventory</h3><span class="pill" id="inventoryCount">0 items</span></div>
+      <input class="search" id="search" placeholder="Search products..." oninput="render()">
+      <div class="filters">
+        <button class="filter active" data-filter="all" onclick="setFilter('all',this)">All</button>
+        <button class="filter" data-filter="available" onclick="setFilter('available',this)">Available</button>
+        <button class="filter" data-filter="sold" onclick="setFilter('sold',this)">Sold</button>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Product</th><th>Buy</th><th>Sell</th><th>Profit</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody id="productRows"></tbody>
+        </table>
+      </div>
+      <div class="empty" id="emptyState">No products yet. Add your first item using the form.</div>
+    </section>
+
+    <aside class="panel">
+      <div class="panel-head"><h3>Add a product</h3><span class="pill">New listing</span></div>
+      <form id="productForm">
+        <div class="formgrid">
+          <div class="field full"><label for="productName">Product name</label><input id="productName" maxlength="55" placeholder="e.g. Vintage jacket" required></div>
+          <div class="field"><label for="category">Category</label><select id="category"><option>Clothing</option><option>Shoes</option><option>Electronics</option><option>Accessories</option><option>Collectibles</option><option>Other</option></select></div>
+          <div class="field"><label for="platform">Platform</label><select id="platform"><option>Instagram</option><option>Facebook Marketplace</option><option>Vinted</option><option>eBay</option><option>Other</option></select></div>
+          <div class="field"><label for="buyPrice">Buy price (€)</label><input id="buyPrice" type="number" min="0" step="0.01" placeholder="10.00" required></div>
+          <div class="field"><label for="sellPrice">Planned sell price (€)</label><input id="sellPrice" type="number" min="0" step="0.01" placeholder="25.00" required></div>
+        </div>
+        <div class="profitbox"><span><small style="color:var(--muted)">Estimated profit</small><br><b>Before extra costs</b></span><strong id="estimate">€0.00</strong></div>
+        <div class="form-actions"><button class="btn" type="submit">＋ Save product</button><button class="btn secondary" type="reset">Clear</button></div>
+      </form>
+      <p class="hint">Your products are saved in this browser on this device. No account needed.</p>
+    </aside>
+  </main>
+  <p class="hint" style="text-align:center;margin-top:22px">FlipHub • Keep track. Sell smart. Repeat.</p>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const KEY='fliphub-products-v1';
+let products=JSON.parse(localStorage.getItem(KEY)||'[]');
+let currentFilter='all';
+const money=n=>'€'+Number(n||0).toFixed(2);
+const byId=id=>document.getElementById(id);
+
+function save(){localStorage.setItem(KEY,JSON.stringify(products));render();}
+function notify(msg){const t=byId('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2200);}
+function setFilter(f,el){currentFilter=f;document.querySelectorAll('.filter').forEach(b=>b.classList.remove('active'));el.classList.add('active');render();}
+function render(){
+ const q=byId('search').value.toLowerCase();
+ const shown=products.filter(p=>(currentFilter==='all'||p.status===currentFilter)&&(`${p.name} ${p.category} ${p.platform}`).toLowerCase().includes(q));
+ byId('productRows').innerHTML=shown.map(p=>`<tr>
+ <td><span class="item">${escapeHtml(p.name)}</span><span class="sub">${escapeHtml(p.category)} · ${escapeHtml(p.platform)}</span></td>
+ <td>${money(p.buy)}</td><td>${money(p.sell)}</td><td class="${p.sell-p.buy>=0?'positive':'negative'}">${p.status==='sold'?money(p.sell-p.buy):'—'}</td>
+ <td><span class="status ${p.status}">${p.status==='sold'?'SOLD':'AVAILABLE'}</span></td>
+ <td><div class="actions">${p.status==='available'?`<button class="mini" onclick="markSold('${p.id}')">Mark sold</button>`:''}<button class="mini" title="Delete" onclick="removeProduct('${p.id}')">✕</button></div></td>
+ </tr>`).join('');
+ byId('emptyState').style.display=shown.length?'none':'block';
+ byId('inventoryCount').textContent=products.length+' items';
+ byId('listedCount').textContent=products.filter(p=>p.status==='available').length;
+ const sold=products.filter(p=>p.status==='sold');
+ byId('soldCount').textContent=sold.length;
+ byId('revenue').textContent=money(sold.reduce((s,p)=>s+p.sell,0));
+ byId('profit').textContent=money(sold.reduce((s,p)=>s+p.sell-p.buy,0));
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function markSold(id){const p=products.find(x=>x.id===id);if(p){p.status='sold';save();notify('Sale recorded!');}}
+function removeProduct(id){if(confirm('Delete this product?')){products=products.filter(p=>p.id!==id);save();notify('Product deleted.');}}
+function updateEstimate(){const b=Number(byId('buyPrice').value)||0,s=Number(byId('sellPrice').value)||0;byId('estimate').textContent=money(s-b);byId('estimate').style.color=s-b>=0?'var(--green)':'var(--red)';}
+byId('buyPrice').addEventListener('input',updateEstimate);byId('sellPrice').addEventListener('input',updateEstimate);
+byId('productForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const name=byId('productName').value.trim(),buy=Number(byId('buyPrice').value),sell=Number(byId('sellPrice').value);
+ if(!name||buy<0||sell<0||!Number.isFinite(buy)||!Number.isFinite(sell)){notify('Please enter valid product details.');return;}
+ products.unshift({id:Date.now().toString(),name,category:byId('category').value,platform:byId('platform').value,buy,sell,status:'available'});
+ save();e.target.reset();updateEstimate();notify('Product added to your inventory!');
+});
+render();
+</script>
+</body>
+</html>
